@@ -20,6 +20,37 @@ Or install it yourself as:
 
 ## Usage
 
+###
+
+```ruby
+require 'the_rules'
+class ServiceObject
+  include TheRules
+  rule "age > 18 should be works" do
+    when? do |data|
+      data[:age] >= 18
+    end
+
+    then! do |data|
+      do_something(data[:name])
+    end
+
+  end
+
+  rule "students" do
+    when? do |data|
+      data[:student]
+    end
+
+
+  end
+
+  def call
+    process_rules {name: 'joe', age: 18, student: true}
+  end
+end
+```
+
 
 ## Development
 
