@@ -20,8 +20,6 @@ module TheRules
     # service object
     attr_accessor :bind_object
 
-    # service class
-    attr_accessor :bind_klass
 
     NO_OP = lambda {|o| true }
     FAIL_OP = lambda {|o| nil}
@@ -34,6 +32,12 @@ module TheRules
       self.success = options[:success] || FAIL_OP
       self.children = {}
       self.bind_klass = options[:bind_klass]
+    end
+
+    def self.factory(name, options = {}, &block)
+      self.new(name, options).tap do |rule|
+        rule.instance_exec(&block) if block
+      end
     end
 
     def when?(&block)
@@ -59,7 +63,7 @@ module TheRules
     end
 
     def rule(name, options = {}, &block)
-      self.children[name] = bind_klass.rule(name, options, &block)
+      self.children[name] = self.class.factory(name, options, &block)
     end
 
     #
