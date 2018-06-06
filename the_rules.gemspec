@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{ruby simple rules engine}
   spec.description   = %q{the_rules is simple rules engine that has nested expression test and evaluate}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/falm/the_rules"
 
   spec.files         = Dir['{lib}/**/*'] + %w{README.md}
 
