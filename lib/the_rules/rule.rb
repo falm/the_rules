@@ -2,6 +2,8 @@
 module TheRules
   class Rule
 
+    include ClassMethods
+
     attr_accessor :priority
     attr_accessor :name
 
@@ -31,7 +33,6 @@ module TheRules
       self.fail = options[:fail] || FAIL_OP
       self.success = options[:success] || FAIL_OP
       self.children = {}
-      self.bind_klass = options[:bind_klass]
     end
 
     def self.factory(name, options = {}, &block)
@@ -51,15 +52,11 @@ module TheRules
     def run(data)
 
       if validate.call(data)
-        run_children(data) || success.call(data)
+        process_rules(data, rules: children.values) || success.call(data)
       else
         fail.call(data)
       end
 
-    end
-
-    def run_children(data)
-      bind_object.process_rules(data, children.values)
     end
 
     def rule(name, options = {}, &block)
