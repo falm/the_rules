@@ -7,3 +7,6 @@
 /spec/reports/
 /tmp/
 .idea/
+*.gem
+*.un~
+.DS_Store
